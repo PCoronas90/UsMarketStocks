@@ -9,19 +9,33 @@
 <body>
   <div id="chart-container">
     <canvas id="chart"></canvas>
+    <!-- Dropdown for interval -->
+    <div id="interval-container">
+      <label for="interval-select">Interval:</label>
+      <select id="interval-select">
+        <option value="1min">1min</option>
+        <option value="5min">5min</option>
+        <option value="15min">15min</option>
+        <option value="30min">30min</option>
+        <option value="45min">45min</option>
+        <option value="1h">1h</option>
+        <option value="2h">2h</option>
+        <option value="4h">4h</option>
+        <option value="1day" selected>1day</option>
+        <option value="1week">1week</option>
+        <option value="1month">1month</option>
+      </select>
+    </div>
   </div>
 
   <div id="sidebar">
     <h2>Select Stocks:</h2>
     <input type="text" id="search" placeholder="Search stock by name...">
     <select id="symbols" multiple></select>
-
     <div id="details"></div>
   </div>
 
-  <!-- Load API key first -->
   <script src="config.js"></script>
-  <!-- Then load main logic -->
   <script src="script.js"></script>
 </body>
 </html>

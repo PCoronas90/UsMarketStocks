@@ -1,7 +1,7 @@
-// Make sure config.js is loaded before this script
+const colorMap = {};
 let chart;
 let stocksData = [];
-const colorMap = {};
+let currentInterval = '1day';  // default interval
 
 function getColor(symbol) {
   if (!colorMap[symbol]) {
@@ -11,25 +11,17 @@ function getColor(symbol) {
   return colorMap[symbol];
 }
 
-// ... resto del codice invariato, usa direttamente API_KEY che arriva da config.js ...
-
-
-// Load stock list dynamically
+// Load stock list
 async function loadStocksList() {
   const urlStocks = `https://api.twelvedata.com/stocks?country=United%20States&exchange=NASDAQ&apikey=${API_KEY}`;
   const res = await fetch(urlStocks);
   const json = await res.json();
 
-  if (!json.data) {
-    document.getElementById("symbols").innerHTML = "<option>No stocks found</option>";
-    return;
-  }
-
+  if (!json.data) return;
   stocksData = json.data.filter(stock => stock.name && stock.name.trim() !== "");
   populateSelect(stocksData);
 }
 
-// Populate select box
 function populateSelect(data) {
   const select = document.getElementById("symbols");
   select.innerHTML = "";
@@ -41,21 +33,27 @@ function populateSelect(data) {
   });
 }
 
-// Search functionality
+// Search
 document.getElementById("search").addEventListener("input", () => {
   const query = document.getElementById("search").value.toLowerCase();
-  const filtered = stocksData.filter(stock => stock.name.toLowerCase().includes(query));
+  const filtered = stocksData.filter(s => s.name.toLowerCase().includes(query));
   populateSelect(filtered);
 });
 
-// Load and display data
+// Update interval
+document.getElementById("interval-select").addEventListener("change", (e) => {
+  currentInterval = e.target.value;
+  loadData(); // reload chart with new interval
+});
+
+// Load data for selected stocks
 async function loadData() {
   const select = document.getElementById("symbols");
-  const selected = Array.from(select.selectedOptions).map(opt => opt.value);
+  const selected = Array.from(select.selectedOptions).map(o => o.value);
 
   if (selected.length === 0) {
-    document.getElementById("details").innerHTML = "No stock selected.";
     renderEmptyChart();
+    document.getElementById("details").innerText = "No stock selected.";
     return;
   }
 
@@ -65,14 +63,10 @@ async function loadData() {
 
   for (const sym of selected) {
     try {
-      const urlHist = `https://api.twelvedata.com/time_series?symbol=${sym}&interval=1day&outputsize=30&apikey=${API_KEY}`;
+      const urlHist = `https://api.twelvedata.com/time_series?symbol=${sym}&interval=${currentInterval}&outputsize=30&apikey=${API_KEY}`;
       const resHist = await fetch(urlHist);
       const jsonHist = await resHist.json();
-
-      if (!jsonHist.values) {
-        detailsText += `⚠️ Error for ${sym}\n`;
-        continue;
-      }
+      if (!jsonHist.values) continue;
 
       const labels = jsonHist.values.map(v => v.datetime).reverse();
       const prices = jsonHist.values.map(v => parseFloat(v.close)).reverse();
@@ -89,8 +83,9 @@ async function loadData() {
       if (jsonHist.meta) {
         detailsText += `${sym} | Exchange: ${jsonHist.meta.exchange} | Currency: ${jsonHist.meta.currency} | Type: ${jsonHist.meta.type}\n`;
       }
-    } catch (e) {
-      detailsText += `Fetch error for ${sym}: ${e}\n`;
+
+    } catch(e) {
+      console.error(e);
     }
   }
 
@@ -119,19 +114,32 @@ async function loadData() {
         },
         legend: { display: true, position: "bottom", align: "start" }
       },
-      interaction: { mode: 'nearest', intersect: false },
       scales: {
         x: {
           title: { display: true, text: 'Date', color: "#fff" },
+		  
+		  
           ticks: {
-            callback: function(value, index) {
-              const date = new Date(this.getLabelForValue(value));
-              const day = date.getDate();
-              const month = date.toLocaleString("en-US", { month: "short" });
-              return `${day} ${month}`;
-            },
-            color: "#fff"
-          }
+  color: "#fff",
+  callback: function(value) {
+    const date = new Date(this.getLabelForValue(value));
+    const day = date.getDate();
+    const month = date.toLocaleString("en-US",{month:"short"});
+
+    // Se intervallo "daily/weekly/monthly" -> solo giorno + mese
+    if (["1day", "1week", "1month"].includes(currentInterval)) {
+      return `${day} ${month}`;
+    }
+
+    // Altrimenti -> aggiungi anche orario
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    return `${day} ${month} ${hours}:${minutes}`;
+  }
+}
+
+		  
+		  
         },
         y: {
           title: { display: true, text: 'Price ($)', color: "#fff" },
@@ -144,35 +152,26 @@ async function loadData() {
   document.getElementById("details").innerText = detailsText;
 }
 
-// Render empty chart
+// Render empty chart with placeholder text
 function renderEmptyChart() {
   if (chart) chart.destroy();
   const ctx = document.getElementById("chart").getContext("2d");
   chart = new Chart(ctx, {
     type: "line",
     data: { labels: [], datasets: [] },
-    options: {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: "US Market Stocks",
-          color: "#fff",
-          font: { size: 18, weight: "bold" }
-        }
-      }
-    },
+    options: { responsive: true,
+      plugins: { title: { display: true, text: "US Market Stocks", color: "#fff", font:{size:18, weight:"bold"} } } },
     plugins: [{
       id: 'emptyChart',
-      afterDraw: chart => {
-        if (chart.data.datasets.length === 0) {
-          const ctx = chart.ctx;
+      afterDraw: c => {
+        if (c.data.datasets.length === 0) {
+          const ctx = c.ctx;
           ctx.save();
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillStyle = '#888';
           ctx.font = '16px Arial';
-          ctx.fillText('Select a stock to display its performance', chart.width / 2, chart.height / 2);
+          ctx.fillText('Select a stock to display its performance', c.width/2, c.height/2);
           ctx.restore();
         }
       }
@@ -180,8 +179,7 @@ function renderEmptyChart() {
   });
 }
 
-document.getElementById("symbols").addEventListener("change", loadData);
-
-// Initialize
+// Init
 loadStocksList();
 renderEmptyChart();
+document.getElementById("symbols").addEventListener("change", loadData);

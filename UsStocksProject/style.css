@@ -27,7 +27,6 @@ body {
   display: flex;
   flex-direction: column;
   background: #1e293b;
-  overflow-y: auto;
 }
 
 h2 {
@@ -49,28 +48,75 @@ input[type="text"] {
 
 select {
   width: 100%;
-  margin-top: 5px;
+  flex: 1 1 auto;        /* occupa spazio disponibile */
   border-radius: 5px;
   border: 1px solid #4b5563;
   padding: 5px;
   background: #111827;
   color: #fff;
+  overflow-y: auto;       /* scroll verticale se troppe opzioni */
 }
 
-#symbols {
-  height: 320px;
-  flex: 1;
-}
-
-/* Details box (bottom 20%) */
+/* Details box fixed at bottom (20% of sidebar) */
 #details {
-  margin-top: 10px;
+  flex: 0 0 20%;
   font-family: monospace;
   white-space: pre-wrap;
-  flex: 0 0 20%;
   overflow-y: auto;
   background: #111827;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #374151;
+}
+
+/* ... resto del CSS invariato ... */
+
+#chart-container {
+  flex: 4;
+  position: relative; /* necessario per posizionamento assoluto figli */
+  padding: 20px;
+  box-sizing: border-box;
+  background: #1f2937;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#interval-container {
+  position: absolute;
+  bottom: 40px; /* sopra la legenda */
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #fff;
+  background: rgba(0,0,0,0.4);
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+/* ... resto del CSS invariato ... */
+
+/* Sidebar (20%) */
+#sidebar {
+  flex: 1;
+  border-left: 1px solid #374151;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background: #1e293b;
+}
+
+/* Dettagli box fixed at bottom (20% of sidebar) */
+#details {
+  flex: 0 0 20%;
+  font-family: monospace;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  background: #111827;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #374151;
+  margin-top: 10px;  /* <-- aggiunto piccolo spazio sopra il box dei dettagli */
 }
