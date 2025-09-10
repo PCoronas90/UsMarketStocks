@@ -56,3 +56,18 @@ JavaScript (Vanilla): core logic (API calls, event handling, chart updates)
 Chart.js (via CDN): chart rendering and interactivity  
 
 Twelve Data API: financial data source (time series and metadata)
+
+#   How To Use
+
+1) Clone this repository  
+
+2) Create a file named config.js in the project root:  
+
+ *//config.js*
+
+*const API_KEY = "YOUR_TWELVE_DATA_API_KEY";*
+
+3) Open index.html in your browser.
+
+
+
