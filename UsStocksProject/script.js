@@ -126,12 +126,10 @@ async function loadData() {
     const day = date.getDate();
     const month = date.toLocaleString("en-US",{month:"short"});
 
-    // Se intervallo "daily/weekly/monthly" -> solo giorno + mese
     if (["1day", "1week", "1month"].includes(currentInterval)) {
       return `${day} ${month}`;
     }
 
-    // Altrimenti -> aggiungi anche orario
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
     return `${day} ${month} ${hours}:${minutes}`;

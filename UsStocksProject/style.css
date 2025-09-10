@@ -48,13 +48,13 @@ input[type="text"] {
 
 select {
   width: 100%;
-  flex: 1 1 auto;        /* occupa spazio disponibile */
+  flex: 1 1 auto;        
   border-radius: 5px;
   border: 1px solid #4b5563;
   padding: 5px;
   background: #111827;
   color: #fff;
-  overflow-y: auto;       /* scroll verticale se troppe opzioni */
+  overflow-y: auto;       
 }
 
 /* Details box fixed at bottom (20% of sidebar) */
@@ -69,11 +69,10 @@ select {
   border: 1px solid #374151;
 }
 
-/* ... resto del CSS invariato ... */
 
 #chart-container {
   flex: 4;
-  position: relative; /* necessario per posizionamento assoluto figli */
+  position: relative; 
   padding: 20px;
   box-sizing: border-box;
   background: #1f2937;
@@ -84,7 +83,7 @@ select {
 
 #interval-container {
   position: absolute;
-  bottom: 40px; /* sopra la legenda */
+  bottom: 40px; 
   left: 20px;
   display: flex;
   align-items: center;
@@ -94,8 +93,6 @@ select {
   padding: 5px 10px;
   border-radius: 5px;
 }
-
-/* ... resto del CSS invariato ... */
 
 /* Sidebar (20%) */
 #sidebar {
@@ -108,7 +105,6 @@ select {
   background: #1e293b;
 }
 
-/* Dettagli box fixed at bottom (20% of sidebar) */
 #details {
   flex: 0 0 20%;
   font-family: monospace;
@@ -118,5 +114,5 @@ select {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #374151;
-  margin-top: 10px;  /* <-- aggiunto piccolo spazio sopra il box dei dettagli */
+  margin-top: 10px;  
 }
