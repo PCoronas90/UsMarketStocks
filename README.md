@@ -76,7 +76,17 @@ Twelve Data API: financial data source (time series and metadata)
 
 #   Images
 
-![Alt text](UsMarketStocks/images/StartingApplication.png)
+![Alt text](UsStocksProject/images/StartingApplication.png)  
+
+![Alt text](UsStocksProject/images/SearchAndSelection.png)  
+
+![Alt text](UsStocksProject/images/IntervalChangeWeeks.png)  
+
+![Alt text](UsStocksProject/images/IntervalChangeWeeks.png)  
+
+![Alt text](UsStocksProject/images/Multiselections.png)   
+
+![Alt text](UsStocksProject/images/Details_2.png)
 
 
 
