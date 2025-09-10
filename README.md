@@ -1,7 +1,7 @@
 # Description
 This is a web application that allows users to monitor and compare stock prices from the NASDAQ (US market) using the free Twelve Data API.
 The app is designed to be simple, lightweight, and runs directly in any modern browser without requiring installation or backend setup.
-This project is based of free plan of Twelve Data API (limitation on US market Only).
+This project is based of free plan of Twelve Data API (limitation on US market Only), there are some limitation regards number of api calls and on the data returned.
 
 #   Features
    # 1) Dynamic chart (powered by Chart.js)
@@ -27,7 +27,11 @@ Only stocks with a valid name field are displayed.
 
 Includes a search bar to filter stocks by name.  
 
-Supports multi-selection to compare multiple stocks at once.
+Supports multi-selection to compare multiple stocks at once.  
+
+Interval change to show the behaviour of price
+
+Dynamic x axis when interval is changed
 
    # 3) Stock details  
    
