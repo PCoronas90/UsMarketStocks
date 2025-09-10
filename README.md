@@ -74,4 +74,12 @@ Twelve Data API: financial data source (time series and metadata)
 3) Open index.html in your browser.
 
 
+#   Images
+
+![Alt text](UsMarketStocks/images/StartingApplication.png)
+
+
+
+
+
 
