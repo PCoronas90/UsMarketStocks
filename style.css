@@ -1,0 +1,76 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  background: #111827;
+  color: #fff;
+}
+
+/* Chart area (80%) */
+#chart-container {
+  flex: 4;
+  padding: 20px;
+  box-sizing: border-box;
+  background: #1f2937;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Sidebar (20%) */
+#sidebar {
+  flex: 1;
+  border-left: 1px solid #374151;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background: #1e293b;
+  overflow-y: auto;
+}
+
+h2 {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #fff;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #4b5563;
+  background: #111827;
+  color: #fff;
+}
+
+select {
+  width: 100%;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #4b5563;
+  padding: 5px;
+  background: #111827;
+  color: #fff;
+}
+
+#symbols {
+  height: 320px;
+  flex: 1;
+}
+
+/* Details box (bottom 20%) */
+#details {
+  margin-top: 10px;
+  font-family: monospace;
+  white-space: pre-wrap;
+  flex: 0 0 20%;
+  overflow-y: auto;
+  background: #111827;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #374151;
+}
