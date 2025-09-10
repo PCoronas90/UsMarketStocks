@@ -4,7 +4,7 @@ The app is designed to be simple, lightweight, and runs directly in any modern b
 This project is based of free plan of Twelve Data API (limitation on US market Only), there are some limitation regards number of api calls and on the data returned.
 
 #   Features
-   # 1) Dynamic chart (powered by Chart.js)
+   # 1) Dynamic chart (Chart.js)
 
 Main area (80% of the screen) dedicated to the stock chart.  
 
@@ -19,7 +19,7 @@ Legend with stock symbols and line colors is displayed bottom-left.
 Chart title “US Market Stocks” is shown at the top center in bold white.
 
 
-   # 2) Interactive stock list (right sidebar, 20%)  
+   # 2) Interactive stock list
    
 Dynamically fetched from Twelve Data NASDAQ API.  
 
